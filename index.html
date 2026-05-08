@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fluente — Prática de Pronúncia</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #f5f5f5;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 24px 16px 48px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 28px 24px;
+      width: 100%;
+      max-width: 600px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08), 0 4px 16px rgba(0, 0, 0, 0.06);
+    }
+
+    .card-header {
+      margin-bottom: 28px;
+    }
+
+    .card-header h1 {
+      font-size: 1.375rem;
+      font-weight: 700;
+      color: #111;
+      letter-spacing: -0.01em;
+    }
+
+    .card-header p {
+      font-size: 0.875rem;
+      color: #6b7280;
+      margin-top: 4px;
+    }
+
+    /* ── Sections ── */
+
+    section {
+      margin-bottom: 28px;
+    }
+
+    .section-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #9ca3af;
+      margin-bottom: 12px;
+    }
+
+    /* ── Phrase inputs ── */
+
+    .phrase-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .phrase-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .phrase-row label {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: #374151;
+      white-space: nowrap;
+      width: 56px;
+      flex-shrink: 0;
+    }
+
+    /* ── Generic input styles ── */
+
+    input[type="text"],
+    input[type="number"],
+    input[type="password"] {
+      font-family: inherit;
+      font-size: 0.9375rem;
+      color: #111;
+      background: #fafafa;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 10px 14px;
+      width: 100%;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    input[type="password"]:focus {
+      border-color: #4F46E5;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+      background: #fff;
+    }
+
+    input[type="text"]::placeholder,
+    input[type="password"]::placeholder {
+      color: #c4c9d4;
+    }
+
+    /* ── Settings grid ── */
+
+    .settings-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+    }
+
+    .setting-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .setting-field label {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: #374151;
+      line-height: 1.3;
+    }
+
+    input[type="number"] {
+      text-align: center;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      opacity: 1;
+    }
+
+    /* ── Buttons ── */
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    button {
+      font-family: inherit;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      min-height: 48px;
+      padding: 0 20px;
+      cursor: pointer;
+      transition: background 0.15s, opacity 0.15s, transform 0.1s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-primary {
+      background: #4F46E5;
+      color: #fff;
+      flex: 1;
+    }
+
+    .btn-primary:hover {
+      background: #4338ca;
+    }
+
+    .btn-primary:active {
+      transform: scale(0.98);
+    }
+
+    .btn-secondary {
+      background: #f3f4f6;
+      color: #374151;
+      flex: 0 0 auto;
+      padding: 0 18px;
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background: #e5e7eb;
+    }
+
+    .btn-secondary:active:not(:disabled) {
+      transform: scale(0.98);
+    }
+
+    button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* ── Cancel button ── */
+
+    .btn-cancel {
+      background: #DC2626;
+      color: #fff;
+      flex: 0 0 auto;
+      padding: 0 18px;
+    }
+
+    .btn-cancel:hover {
+      background: #b91c1c;
+    }
+
+    .btn-cancel:active {
+      transform: scale(0.98);
+    }
+
+    /* ── Status area ── */
+
+    .status-bar {
+      background: #f9fafb;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 12px 14px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+    }
+
+    .status-text {
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+
+    /* ── Responsive: collapse settings to 1 column on very small screens ── */
+
+    @media (max-width: 360px) {
+      .settings-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .button-group {
+        flex-direction: column;
+      }
+
+      .btn-secondary {
+        flex: 1;
+      }
+    }
+
+    /* ── API config section ── */
+
+    .api-config {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .api-key-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 6px;
+    }
+
+    .api-key-row label {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: #374151;
+    }
+
+    .api-key-row a {
+      font-size: 0.75rem;
+      color: #4F46E5;
+      text-decoration: none;
+    }
+
+    .api-key-row a:hover {
+      text-decoration: underline;
+    }
+
+    select {
+      font-family: inherit;
+      font-size: 0.9375rem;
+      color: #111;
+      background: #fafafa
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239ca3af' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+        no-repeat right 14px center;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 10px 36px 10px 14px;
+      width: 100%;
+      outline: none;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    select:focus {
+      border-color: #4F46E5;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+      background-color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="card-header">
+      <h1>Fluente</h1>
+      <p>Gere áudio para praticar pronúncia em inglês</p>
+    </div>
+
+    <section>
+      <div class="section-title">API</div>
+      <div class="api-config">
+        <div>
+          <div class="api-key-row">
+            <label for="api-key">ElevenLabs API Key</label>
+            <a href="https://elevenlabs.io" target="_blank" rel="noopener noreferrer">Obter API Key</a>
+          </div>
+          <input type="password" id="api-key" name="api-key" autocomplete="off">
+        </div>
+        <div class="setting-field">
+          <label for="voice-select">Voz</label>
+          <select id="voice-select">
+            <option value="21m00Tcm4TlvDq8ikWAM">Rachel</option>
+            <option value="9BWtsMINqrJLrRacOk9x">Aria</option>
+            <option value="JBFqnCBsd6RMkjVDRZzb">George</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">Frases</div>
+      <div class="setting-field" style="margin-bottom:12px">
+        <label for="block-select">Bloco do dia</label>
+        <select id="block-select">
+          <option value="">— Selecionar bloco —</option>
+          <option value="0">Bloco 01 — Apresentações</option>
+          <option value="1">Bloco 02 — Rotina Diária</option>
+          <option value="2">Bloco 03 — No Café e Restaurante</option>
+          <option value="3">Bloco 04 — Compras</option>
+          <option value="4">Bloco 05 — Pedindo Direções</option>
+          <option value="5">Bloco 06 — Transporte e Viagem</option>
+          <option value="6">Bloco 07 — No Médico</option>
+          <option value="7">Bloco 08 — Pedindo e Oferecendo Ajuda</option>
+          <option value="8">Bloco 09 — Trabalho e Profissão</option>
+          <option value="9">Bloco 10 — Hobbies e Tempo Livre</option>
+          <option value="10">Bloco 11 — Família e Relacionamentos</option>
+          <option value="11">Bloco 12 — Sentimentos e Emoções</option>
+          <option value="12">Bloco 13 — Opiniões e Concordância</option>
+          <option value="13">Bloco 14 — Gostos e Preferências</option>
+          <option value="14">Bloco 15 — Fazendo Planos</option>
+          <option value="15">Bloco 16 — Tecnologia e Cotidiano Digital</option>
+          <option value="16">Bloco 17 — Clima e Ambiente</option>
+          <option value="17">Bloco 18 — Esportes e Saúde</option>
+          <option value="18">Bloco 19 — Problemas e Soluções</option>
+          <option value="19">Bloco 20 — Despedidas e Futuro</option>
+        </select>
+      </div>
+      <div class="phrase-list">
+        <div class="phrase-row">
+          <label for="phrase-1">Frase 1</label>
+          <input type="text" id="phrase-1" name="phrase-1">
+        </div>
+        <div class="phrase-row">
+          <label for="phrase-2">Frase 2</label>
+          <input type="text" id="phrase-2" name="phrase-2">
+        </div>
+        <div class="phrase-row">
+          <label for="phrase-3">Frase 3</label>
+          <input type="text" id="phrase-3" name="phrase-3">
+        </div>
+        <div class="phrase-row">
+          <label for="phrase-4">Frase 4</label>
+          <input type="text" id="phrase-4" name="phrase-4">
+        </div>
+        <div class="phrase-row">
+          <label for="phrase-5">Frase 5</label>
+          <input type="text" id="phrase-5" name="phrase-5">
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">Configurações</div>
+      <div class="settings-grid">
+        <div class="setting-field">
+          <label for="repetitions">Repetições</label>
+          <input
+            type="number"
+            id="repetitions"
+            name="repetitions"
+            min="1"
+            max="10"
+            value="3"
+          >
+        </div>
+      </div>
+    </section>
+
+    <div class="button-group">
+      <button type="button" class="btn-primary" id="btn-play">
+        ▶ Gerar e Ouvir
+      </button>
+      <button type="button" class="btn-cancel" id="btn-cancel" style="display:none">
+        ✕ Cancelar
+      </button>
+      <button type="button" class="btn-secondary" id="btn-download" disabled>
+        ⬇ Baixar Áudio
+      </button>
+    </div>
+
+    <div class="status-bar" role="status" aria-live="polite">
+      <span class="status-text" id="status-text">Aguardando...</span>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var btnPlay     = document.getElementById('btn-play');
+      var btnCancel   = document.getElementById('btn-cancel');
+      var btnDownload = document.getElementById('btn-download');
+      var statusEl    = document.getElementById('status-text');
+
+      var savedApiKey = localStorage.getItem('el_api_key');
+      if (savedApiKey) document.getElementById('api-key').value = savedApiKey;
+
+      var state         = 'idle';   // 'idle' | 'playing' | 'paused'
+      var pendingTimer  = null;
+      var pendingFn     = null;
+      var continuation  = null;
+      var currentAudio  = null;
+      var downloadBlobs = [];
+
+      var PAUSE_BETWEEN_REPS    = 1.5;
+      var PAUSE_BETWEEN_PHRASES = 2.5;
+
+      function setStatus(text) { statusEl.textContent = text; }
+
+      function resetUI() {
+        state                   = 'idle';
+        pendingTimer            = null;
+        pendingFn               = null;
+        continuation            = null;
+        btnPlay.textContent     = '▶ Gerar e Ouvir';
+        btnPlay.disabled        = false;
+        btnCancel.style.display = 'none';
+        if (downloadBlobs.length > 0) btnDownload.disabled = false;
+      }
+
+      function scheduleNext(fn, delayMs) {
+        if (state === 'paused')  { continuation = fn; return; }
+        if (state !== 'playing') return;
+        pendingFn    = fn;
+        pendingTimer = setTimeout(function () {
+          pendingFn    = null;
+          pendingTimer = null;
+          fn();
+        }, delayMs);
+      }
+
+      function pausePlayback() {
+        state = 'paused';
+        if (pendingTimer !== null) {
+          clearTimeout(pendingTimer);
+          continuation = pendingFn;
+          pendingTimer = null;
+          pendingFn    = null;
+        }
+        btnPlay.textContent = '▶ Retomar';
+        setStatus(statusEl.textContent + ' (pausado)');
+      }
+
+      function resumePlayback() {
+        state               = 'playing';
+        btnPlay.textContent = '⏸ Pausar';
+        if (continuation !== null) {
+          var fn       = continuation;
+          continuation = null;
+          fn();
+        }
+      }
+
+      function cancelPlayback() {
+        if (pendingTimer !== null) clearTimeout(pendingTimer);
+        if (currentAudio !== null) {
+          currentAudio.pause();
+          currentAudio.src = '';
+          currentAudio     = null;
+        }
+        setStatus('Cancelado.');
+        resetUI();
+      }
+
+      // ── ElevenLabs pre-loader ──────────────────────────────────────────────
+
+      async function preloadPhrases(phrases, apiKey, voiceId) {
+        var cache = new Map();
+        for (var i = 0; i < phrases.length; i++) {
+          if (state !== 'playing') return null;
+          setStatus('Preparando áudio… (frase ' + (i + 1) + ' de ' + phrases.length + ')');
+
+          var response;
+          try {
+            response = await fetch(
+              'https://api.elevenlabs.io/v1/text-to-speech/' + voiceId,
+              {
+                method: 'POST',
+                headers: { 'xi-api-key': apiKey, 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  text:           phrases[i],
+                  model_id:       'eleven_multilingual_v2',
+                  voice_settings: { stability: 0.5, similarity_boost: 0.75, speed: 0.75 }
+                })
+              }
+            );
+          } catch (e) {
+            setStatus('Erro de rede: ' + e.message);
+            resetUI();
+            return null;
+          }
+
+          if (!response.ok) {
+            var errData = null;
+            try { errData = await response.json(); } catch (_) {}
+            var msg = errData && errData.detail
+              ? (errData.detail.message || String(errData.detail))
+              : 'Erro ' + response.status;
+            setStatus('Erro API: ' + msg);
+            resetUI();
+            return null;
+          }
+
+          cache.set(phrases[i], await response.blob());
+        }
+        return cache;
+      }
+
+      // ── Download sequence builder ──────────────────────────────────────────
+
+      function buildDownloadSequence(phrases, audioCache, cfg) {
+        var blobs = [];
+        for (var pi = 0; pi < phrases.length; pi++) {
+          for (var ri = 1; ri <= cfg.reps; ri++) {
+            blobs.push(audioCache.get(phrases[pi]));
+          }
+        }
+        return blobs;
+      }
+
+      // ── Playback ───────────────────────────────────────────────────────────
+
+      function playBlob(blob, onDone) {
+        var url  = URL.createObjectURL(blob);
+        var audio = new Audio(url);
+        currentAudio = audio;
+        audio.onended = function () {
+          currentAudio = null;
+          URL.revokeObjectURL(url);
+          onDone();
+        };
+        audio.onerror = function () {
+          currentAudio = null;
+          URL.revokeObjectURL(url);
+          onDone();
+        };
+        audio.play();
+      }
+
+      function runRep(phrases, pi, ri, audioCache, cfg) {
+        if (state !== 'playing') return;
+        setStatus(
+          'Frase ' + (pi + 1) + ' de ' + phrases.length +
+          ' — repetição ' + ri + ' de ' + cfg.reps
+        );
+        playBlob(audioCache.get(phrases[pi]), function () {
+          if (ri < cfg.reps) {
+            scheduleNext(function () { runRep(phrases, pi, ri + 1, audioCache, cfg); }, cfg.pauseReps * 1000);
+          } else {
+            scheduleNext(function () { runPhrase(phrases, pi + 1, audioCache, cfg); }, cfg.pausePhrases * 1000);
+          }
+        });
+      }
+
+      function runPhrase(phrases, pi, audioCache, cfg) {
+        if (state !== 'playing') return;
+        if (pi >= phrases.length) {
+          setStatus('Concluído ✓');
+          resetUI();
+          return;
+        }
+        runRep(phrases, pi, 1, audioCache, cfg);
+      }
+
+      async function start() {
+        var apiKey  = document.getElementById('api-key').value.trim();
+        var voiceId = document.getElementById('voice-select').value;
+
+        if (!apiKey) {
+          setStatus('Informe a API Key do ElevenLabs antes de continuar.');
+          return;
+        }
+
+        var phrases = [1, 2, 3, 4, 5]
+          .map(function (i) { return document.getElementById('phrase-' + i).value.trim(); })
+          .filter(function (p) { return p.length > 0; });
+
+        if (phrases.length === 0) {
+          setStatus('Adicione pelo menos uma frase.');
+          return;
+        }
+
+        var cfg = {
+          reps:         Math.max(1, parseInt(document.getElementById('repetitions').value, 10) || 3),
+          pauseReps:    PAUSE_BETWEEN_REPS,
+          pausePhrases: PAUSE_BETWEEN_PHRASES
+        };
+
+        downloadBlobs           = [];
+        btnDownload.disabled    = true;
+        state                   = 'playing';
+        btnPlay.textContent     = '⏸ Pausar';
+        btnCancel.style.display = '';
+
+        var audioCache = await preloadPhrases(phrases, apiKey, voiceId);
+        if (!audioCache || state !== 'playing') return;
+
+        downloadBlobs = buildDownloadSequence(phrases, audioCache, cfg);
+        btnDownload.disabled = false;
+        console.log('downloadBlobs:', downloadBlobs);
+        runPhrase(phrases, 0, audioCache, cfg);
+      }
+
+      btnPlay.addEventListener('click', function () {
+        if (state === 'idle')         start();
+        else if (state === 'playing') pausePlayback();
+        else if (state === 'paused')  resumePlayback();
+      });
+
+      btnCancel.addEventListener('click', cancelPlayback);
+
+      document.getElementById('api-key').addEventListener('input', function () {
+        if (this.value) localStorage.setItem('el_api_key', this.value);
+        else localStorage.removeItem('el_api_key');
+      });
+
+      var BLOCKS = [
+        ["Hi! My name is Caio. Nice to meet you.", "Where are you from? I'm from Brazil.", "How are you? I'm doing great, thanks.", "What do you do for a living?", "See you later! Have a good one."],
+        ["I wake up at seven every morning.", "I take a shower before breakfast.", "I go to work by train every day.", "I have lunch at noon with my colleagues.", "I go to bed at eleven at night."],
+        ["Can I have a coffee, please?", "I'd like a table for two, please.", "What do you recommend today?", "Could I have the bill, please?", "This is absolutely delicious. I love it."],
+        ["How much does this cost?", "Do you have this in a bigger size?", "I'm just looking, thank you.", "Can I pay by card?", "I'd like to return this, please."],
+        ["Excuse me, where is the train station?", "Go straight and turn left at the corner.", "It's about ten minutes on foot.", "Is there a pharmacy near here?", "Sorry, I don't know this area very well."],
+        ["I'd like a round-trip ticket to Paris, please.", "What time does the next train arrive?", "My flight departs at six in the morning.", "Can you call me a taxi, please?", "I think I left my bag on the bus."],
+        ["I have had a headache since yesterday.", "I don't feel well. I need to see a doctor.", "I'm allergic to penicillin.", "How many times should I take this medicine?", "I'll schedule an appointment for next week."],
+        ["Could you help me with this, please?", "Of course! I'd be happy to help.", "I'm sorry, I don't understand. Can you repeat that?", "Can you speak more slowly, please?", "Don't worry about it. It's no problem at all."],
+        ["I work as a DJ on weekends.", "My job is very creative and fun.", "I have an important meeting at three o'clock.", "Can we reschedule for tomorrow morning?", "I'm working on a new project right now."],
+        ["I love playing music on my days off.", "I go running in the park on weekends.", "I usually listen to new tracks to get inspired.", "In my free time, I like to cook new things.", "Reading is a great way to learn English fast."],
+        ["I have one brother and two sisters.", "My parents live in Brazil.", "We usually have dinner together on Sundays.", "My best friend and I have known each other for years.", "I really miss my family when I'm far from home."],
+        ["I feel really excited about this weekend.", "I'm a little tired but in a great mood.", "That makes me really happy. Thank you!", "I'm nervous but I know I can do it.", "I'm proud of what I've accomplished this month."],
+        ["In my opinion, this is the best option.", "I completely agree with what you said.", "I'm not sure about that. Let me think.", "That's a really interesting point of view.", "I understand your point, but I see it differently."],
+        ["I love electronic music and deep house.", "I can't stand waking up early in the morning.", "I prefer cooking at home to eating out.", "My favorite food is Brazilian barbecue.", "I don't really like cold weather at all."],
+        ["Are you free this Saturday night?", "Let's meet at eight o'clock at the bar.", "I can't make it tonight. Can we reschedule?", "Sounds great! I'll be there for sure.", "Don't forget to send me the address."],
+        ["My phone battery is dead. Can I use yours?", "Can you send me the link on WhatsApp?", "The internet connection here is very slow.", "I use Spotify to discover new music every day.", "I post new content every week on social media."],
+        ["It's really cold today. Don't forget your coat.", "The weather in Lyon changes very fast.", "It's going to rain this afternoon.", "I love summer, but the heat can be too much.", "Spring is my favorite season of the year."],
+        ["I try to work out at least three times a week.", "Running is the best way to clear my head.", "I played football when I was a kid.", "Stretching after exercise is very important.", "I'm getting better at cycling every single day."],
+        ["I'm sorry, I made a mistake. Let me fix it.", "The music is too loud. Can you turn it down?", "I lost my keys. I need to find them right now.", "Something is wrong with the equipment.", "Don't worry. We will figure this out together."],
+        ["It was great seeing you. Let's do it again soon.", "Take care! See you next time.", "I'm planning to travel to London next year.", "I hope everything goes well for you. Good luck!", "It's been a pleasure. Thank you for everything."]
+      ];
+
+      document.getElementById('block-select').addEventListener('change', function () {
+        var phrases = this.value !== '' ? BLOCKS[parseInt(this.value, 10)] : ['', '', '', '', ''];
+        for (var i = 0; i < 5; i++) {
+          document.getElementById('phrase-' + (i + 1)).value = phrases[i];
+        }
+      });
+
+      btnDownload.addEventListener('click', function () {
+        if (downloadBlobs.length === 0) {
+          setStatus('Nenhum áudio gerado ainda.');
+          return;
+        }
+        var combined = new Blob(downloadBlobs, { type: 'audio/mpeg' });
+        var url      = URL.createObjectURL(combined);
+        var a        = document.createElement('a');
+        a.href       = url;
+        var blockSel   = document.getElementById('block-select');
+        var blockLabel = blockSel.value !== ''
+          ? blockSel.options[blockSel.selectedIndex].text.replace(' — ', ' ')
+          : 'Custom';
+        var reps       = document.getElementById('repetitions').value || '3';
+        a.download     = 'Fluente - ' + blockLabel + ' - ' + reps + 'x.mp3';
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+    })();
+  </script>
+</body>
+</html>
